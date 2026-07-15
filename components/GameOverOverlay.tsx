@@ -5,7 +5,6 @@ import { percentile } from "@/data/percentile";
 import { useRouter } from "next/navigation";
 
 export default function GameOverOverlay({ score, onPlayAgain }: { score: number, onPlayAgain: () => void }) {
-  const isWin = score === 10;
   const pct = percentile[score] || 0;
   const router = useRouter();
   
@@ -34,8 +33,8 @@ export default function GameOverOverlay({ score, onPlayAgain }: { score: number,
             exit={{ opacity: 0, x: -20 }}
             className="text-center text-white w-full max-w-sm"
           >
-            <h1 className="text-4xl font-bold mb-4">{isWin ? "You called it." : "Game over"}</h1>
-            <p className="text-xl mb-8">You scored {score} / 10</p>
+            <h1 className="text-4xl font-bold mb-4">Game over</h1>
+            <p className="text-xl mb-8">You scored {score}</p>
             
             {score > 0 && (
               <div className="mb-8 bg-white/10 rounded-xl p-4 border border-white/20">
@@ -48,9 +47,10 @@ export default function GameOverOverlay({ score, onPlayAgain }: { score: number,
             <div className="flex flex-col gap-3">
               <button 
                 onClick={() => setShowLogin(true)}
-                className="w-full bg-[var(--color-green)] text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:bg-green-600 transition-colors"
+                className="w-full bg-[var(--color-green)] text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:bg-green-600 transition-colors flex flex-col items-center justify-center leading-tight"
               >
-                Save Score
+                <span>Log in to save your score</span>
+                <span className="text-sm opacity-90">and get prizes</span>
               </button>
               <button 
                 onClick={onPlayAgain}
@@ -74,8 +74,8 @@ export default function GameOverOverlay({ score, onPlayAgain }: { score: number,
             exit={{ opacity: 0, x: 20 }}
             className="w-full max-w-sm text-white"
           >
-            <h2 className="text-3xl font-bold mb-2 text-center">Save your score</h2>
-            <p className="text-center text-[var(--color-text-muted)] mb-8">Sign in to appear on the leaderboard.</p>
+            <h2 className="text-3xl font-bold mb-2 text-center">Log in</h2>
+            <p className="text-center text-[var(--color-text-muted)] mb-8">Sign in to save your score and get prizes.</p>
             
             {isSaving ? (
               <div className="flex flex-col items-center justify-center py-12">

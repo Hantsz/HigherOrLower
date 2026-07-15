@@ -71,16 +71,18 @@ export default function GamePage() {
 
     setTimeout(() => {
       if (isGuessCorrect) {
-        if (round === 10) {
-          setScore(prev => prev + 1);
-          setGameOver(true);
-        } else {
-          setScore(prev => prev + 1);
-          setIsRevealed(false);
-          setIsCorrect(null);
-          setRound(prev => prev + 1);
-          setAnimating(false);
-        }
+        setScore(prev => prev + 1);
+        setIsRevealed(false);
+        setIsCorrect(null);
+        setRound(prev => {
+          const nextRound = prev + 1;
+          // Dynamically extend deck if approaching the end
+          if (nextRound >= deck.length - 1) {
+            setDeck(currentDeck => [...currentDeck, ...shuffleArray(playingDeck)]);
+          }
+          return nextRound;
+        });
+        setAnimating(false);
       } else {
         setGameOver(true);
         setAnimating(false);
@@ -90,7 +92,7 @@ export default function GamePage() {
 
   return (
     <main className="min-h-screen bg-black overflow-hidden relative font-sans">
-      <ProgressBar round={round} score={score} />
+      <ProgressBar score={score} />
       
       <div className="absolute inset-0 pt-8 pb-[72px] overflow-hidden">
         <AnimatePresence mode="popLayout">

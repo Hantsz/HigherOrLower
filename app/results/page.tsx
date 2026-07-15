@@ -15,7 +15,8 @@ export default async function ResultsPage({ searchParams }: { searchParams: Prom
       
       <div className="max-w-md mx-auto px-4 py-8">
         <div className="text-center mb-8">
-          <h1 className="text-6xl font-bold mb-2">{score} <span className="text-2xl text-[var(--color-text-muted)]">/ 10</span></h1>
+          <h1 className="text-6xl font-bold mb-1">{score}</h1>
+          <p className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider mb-3">Final Score</p>
           {score > 0 && (
              <p className="text-[var(--color-green)] font-bold text-lg">
                Better than {pct}% of today&apos;s players

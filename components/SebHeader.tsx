@@ -1,8 +1,16 @@
+import Image from "next/image";
+
 export default function SebHeader() {
   return (
     <header className="w-full bg-black h-14 flex items-center px-4">
-      <div className="w-8 h-8 bg-[var(--color-green)] flex items-center justify-center">
-        <span className="text-white font-bold text-xs tracking-widest">S|E|B</span>
+      <div className="w-8 h-8 relative overflow-hidden rounded-sm">
+        <Image 
+          src="/seb-logo.png" 
+          alt="SEB Logo" 
+          width={32} 
+          height={32} 
+          className="object-cover w-full h-full"
+        />
       </div>
     </header>
   );

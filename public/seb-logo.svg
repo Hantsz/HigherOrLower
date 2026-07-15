@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#60CD18" />
+  <g fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-weight="800">
+    <text x="92" y="232" font-size="105" text-anchor="middle">S</text>
+    <rect x="156" y="146" width="8" height="108" />
+    <text x="200" y="232" font-size="105" text-anchor="middle">E</text>
+    <rect x="236" y="146" width="8" height="108" />
+    <text x="280" y="232" font-size="105" text-anchor="middle">B</text>
+  </g>
+</svg>

@@ -12,7 +12,7 @@ export default function Home() {
         </h1>
         
         <p className="text-lg text-[var(--color-text-muted)] mb-12">
-          Guess which asset grew more. Get 10 right and unlock your first real investment with SEB.
+          Guess which asset grew more. Build your streak and unlock your first real investment with SEB.
         </p>
         
         <Link 
