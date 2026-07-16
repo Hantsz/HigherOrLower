@@ -36,7 +36,7 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
           {asset.logo && (
             <div className="w-16 h-16 rounded-full bg-white border border-[var(--color-border)] mb-4 flex items-center justify-center overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/logos/${asset.logo}`} alt={asset.name} className="w-10 h-10 object-contain" />
+              <img src={asset.logo.startsWith("http") ? asset.logo : `/logos/${asset.logo}`} alt={asset.name} className="w-10 h-10 object-contain" />
             </div>
           )}
           <h2 className="text-2xl font-bold mb-1 text-center">{asset.name}</h2>
