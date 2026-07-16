@@ -38,7 +38,7 @@ export default function GameOverOverlay({ score, onPlayAgain }: { score: number,
             
             {score > 0 && (
               <div className="mb-8 bg-white/10 rounded-xl p-4 border border-white/20">
-                 <p className="text-[var(--color-green)] font-bold text-lg">
+                 <p className="text-[var(--color-correct)] font-bold text-lg">
                    Better than {pct}% of today&apos;s players
                  </p>
               </div>

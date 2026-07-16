@@ -40,7 +40,7 @@ export default function ResultsPage({ searchParams }: { searchParams: Promise<{ 
           <h1 className="text-6xl font-bold mb-1">{highScore}</h1>
           <p className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider mb-3">High Score</p>
           {highScore > 0 && (
-             <p className="text-[var(--color-green)] font-bold text-lg">
+             <p className="text-[var(--color-correct)] font-bold text-lg">
                Better than {pct}% of today&apos;s players
              </p>
           )}
