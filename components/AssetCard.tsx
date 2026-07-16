@@ -24,7 +24,18 @@ function CountUp({ value }: { value: number }) {
 
 export default function AssetCard({ asset, isBottom, revealed, isCorrect }: AssetCardProps) {
   return (
-    <div className={`w-full flex-1 flex flex-col items-center justify-center p-4 md:p-6 bg-[var(--color-bg-card)]`}>
+    <div className={`relative overflow-hidden w-full flex-1 flex flex-col items-center justify-center p-4 md:p-6 bg-[var(--color-bg-card)]`}>
+      {asset?.background && (
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(/backgrounds/${asset.background})` }}
+          />
+          {/* soften the photo so card text stays readable */}
+          <div className="absolute inset-0 bg-[var(--color-bg-card)]/80" />
+        </>
+      )}
+      <div className="relative z-10 w-full flex flex-col items-center">
       {asset ? (
         <>
           {asset.logo && (
@@ -84,6 +95,7 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
       ) : (
          <div className="text-[var(--color-text-muted)] font-bold">...</div>
       )}
+      </div>
     </div>
   );
 }
