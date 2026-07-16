@@ -25,9 +25,16 @@ export default function GamePage() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [animating, setAnimating] = useState(false);
+  // Phones lay the cards out horizontally, so cards push left instead of up
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setDeck(shuffleArray(playingDeck));
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
   
   const initGame = useCallback(() => {
@@ -91,13 +98,13 @@ export default function GamePage() {
     <main className="h-[100dvh] bg-black overflow-hidden flex flex-col font-sans">
       <div className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="popLayout">
-          <motion.div 
+          <motion.div
             key={round}
-            initial={{ y: "50%", opacity: 1 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "-50%", opacity: 1 }}
+            initial={isMobile ? { x: "50%", opacity: 1 } : { y: "50%", opacity: 1 }}
+            animate={isMobile ? { x: 0, opacity: 1 } : { y: 0, opacity: 1 }}
+            exit={isMobile ? { x: "-50%", opacity: 1 } : { y: "-50%", opacity: 1 }}
             transition={{ type: "spring", stiffness: 250, damping: 25 }}
-            className="absolute inset-0 flex flex-col" 
+            className="absolute inset-0 flex flex-row md:flex-col"
           >
             <AssetCard asset={topCard} isBottom={false} revealed={true} />
             <AssetCard asset={bottomCard} isBottom={true} revealed={isRevealed} isCorrect={isCorrect} />
