@@ -31,8 +31,8 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(/backgrounds/${asset.background})` }}
           />
-          {/* soften the photo so card text stays readable */}
-          <div className="absolute inset-0 bg-[var(--color-bg-card)]/80" />
+          {/* light veil + slight blur: keeps text readable without washing out the photo */}
+          <div className="absolute inset-0 bg-[var(--color-bg-card)]/40 backdrop-blur-[2px]" />
         </>
       )}
       <div className="relative z-10 w-full flex flex-col items-center">
