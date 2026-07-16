@@ -25,18 +25,8 @@ function CountUp({ value }: { value: number }) {
 
 export default function AssetCard({ asset, isBottom, revealed, isCorrect }: AssetCardProps) {
   return (
-    <div className={`relative overflow-hidden w-full flex-1 flex flex-col items-center justify-center p-4 md:p-6 bg-[var(--color-bg-card)]`}>
-      {asset?.background && (
-        <>
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(/backgrounds/${asset.background})` }}
-          />
-          {/* light veil + slight blur: keeps text readable without washing out the photo */}
-          <div className="absolute inset-0 bg-[var(--color-bg-card)]/40 backdrop-blur-[2px]" />
-        </>
-      )}
-      <div className="relative z-10 w-full flex flex-col items-center">
+    <div className={`w-full flex-1 flex flex-col items-center justify-center p-4 md:p-6 bg-[var(--color-bg-card)]`}>
+      <div className="w-full flex flex-col items-center">
       {asset ? (
         <>
           {asset.logo && (
@@ -82,24 +72,30 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
             )}
           </div>
           
-          <div className="mt-3 min-h-8 flex items-center justify-center">
+          <div className="mt-3 min-h-8 flex flex-col items-center justify-center gap-2">
+             {/* general company info is always visible */}
+             <p className="text-sm font-medium text-[var(--color-text-primary)]/80 text-center max-w-xs">
+               {asset.funFact}
+             </p>
              {isBottom && !revealed ? (
-               insights[asset.id] ? (
+               insights[asset.id] && (
                  <ul className="text-xs md:text-sm font-medium text-[var(--color-text-primary)]/80 text-left space-y-1 max-w-xs list-disc list-inside">
                    {insights[asset.id].hints.map((hint) => (
                      <li key={hint}>{hint}</li>
                    ))}
                  </ul>
-               ) : null
+               )
              ) : (
-               <motion.p
-                 initial={{ opacity: 0 }}
-                 animate={{ opacity: 1 }}
-                 transition={{ delay: 0.3 }}
-                 className="text-sm font-medium text-[var(--color-text-primary)]/80 text-center max-w-xs"
-               >
-                 {insights[asset.id]?.why ?? asset.funFact}
-               </motion.p>
+               insights[asset.id] && (
+                 <motion.p
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   transition={{ delay: 0.3 }}
+                   className="text-sm font-medium text-[var(--color-text-primary)]/80 text-center max-w-xs"
+                 >
+                   {insights[asset.id].why}
+                 </motion.p>
+               )
              )}
           </div>
         </>
