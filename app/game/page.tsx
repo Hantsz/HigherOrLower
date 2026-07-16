@@ -93,7 +93,7 @@ export default function GamePage() {
   };
 
   return (
-    <main className="h-screen bg-black overflow-hidden flex flex-col font-sans">
+    <main className="h-[100dvh] bg-black overflow-hidden flex flex-col font-sans">
       <div className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div 

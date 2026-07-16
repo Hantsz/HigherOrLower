@@ -3,7 +3,7 @@ import SebHeader from "@/components/SebHeader";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col bg-white">
+    <main className="min-h-[100dvh] flex flex-col bg-white">
       <SebHeader />
       
       <div className="flex-1 flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto">
