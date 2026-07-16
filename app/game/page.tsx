@@ -25,8 +25,12 @@ export default function GamePage() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [animating, setAnimating] = useState(false);
-  // Desktop lays the cards out side by side, so cards push left instead of up
-  const [isMobile, setIsMobile] = useState(false);
+  // Desktop lays the cards out side by side, so cards push left instead of up.
+  // Initialized from matchMedia on the client so the very first render already
+  // uses the correct axis (SSR renders false; no styles depend on it at mount).
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+  );
 
   useEffect(() => {
     setDeck(shuffleArray(playingDeck));
@@ -97,12 +101,12 @@ export default function GamePage() {
   return (
     <main className="h-[100dvh] bg-black overflow-hidden flex flex-col font-sans">
       <div className="flex-1 relative overflow-hidden">
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={round}
-            initial={isMobile ? { y: "50%", opacity: 1 } : { x: "50%", opacity: 1 }}
-            animate={isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
-            exit={isMobile ? { y: "-50%", opacity: 1 } : { x: "-50%", opacity: 1 }}
+            initial={isMobile ? { y: "50%", x: 0, opacity: 1 } : { x: "50%", y: 0, opacity: 1 }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            exit={isMobile ? { y: "-50%", x: 0, opacity: 1 } : { x: "-50%", y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 250, damping: 25 }}
             className="absolute inset-0 flex flex-col md:flex-row"
           >
