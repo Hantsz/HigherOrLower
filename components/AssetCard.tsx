@@ -59,16 +59,14 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
           </div>
           
           <div className="h-8 mt-4 flex items-center justify-center">
-             {revealed && (
-               <motion.p 
-                 initial={{ opacity: 0 }} 
-                 animate={{ opacity: 1 }} 
-                 transition={{ delay: 0.3 }}
-                 className="text-sm text-[var(--color-text-muted)] text-center max-w-xs"
-               >
-                 {asset.funFact}
-               </motion.p>
-             )}
+             <motion.p 
+               initial={{ opacity: 0 }} 
+               animate={{ opacity: 1 }} 
+               transition={{ delay: 0.3 }}
+               className="text-sm text-[var(--color-text-muted)] text-center max-w-xs"
+             >
+               {asset.funFact}
+             </motion.p>
           </div>
         </>
       ) : (
