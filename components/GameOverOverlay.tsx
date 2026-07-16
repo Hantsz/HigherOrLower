@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { percentile } from "@/data/percentile";
+import { getPercentile } from "@/data/percentile";
 import { useRouter } from "next/navigation";
 
 export default function GameOverOverlay({ score, onPlayAgain }: { score: number, onPlayAgain: () => void }) {
-  const pct = percentile[score] || 0;
+  const pct = getPercentile(score);
   const router = useRouter();
   
   const [showLogin, setShowLogin] = useState(false);

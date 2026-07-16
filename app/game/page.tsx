@@ -4,7 +4,7 @@ import { assets, Asset } from "@/data/assets";
 import AssetCard from "@/components/AssetCard";
 import Divider from "@/components/Divider";
 import GameOverOverlay from "@/components/GameOverOverlay";
-import SebHeader from "@/components/SebHeader";
+import ScoreHeader from "@/components/ScoreHeader";
 import { motion, AnimatePresence } from "framer-motion";
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -126,7 +126,7 @@ export default function GamePage() {
 
   return (
     <main className="h-[100dvh] bg-black overflow-hidden flex flex-col font-sans relative">
-      <SebHeader score={score} highScore={highScore} />
+      <ScoreHeader score={score} highScore={highScore} />
       
       <AnimatePresence>
         {showSurpriseBanner && (
