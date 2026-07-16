@@ -98,9 +98,9 @@ export default function GamePage() {
         <AnimatePresence mode="popLayout">
           <motion.div 
             key={round}
-            initial={{ y: "50vh", opacity: 1 }}
+            initial={{ y: "50%", opacity: 1 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "-50vh", opacity: 1 }}
+            exit={{ y: "-50%", opacity: 1 }}
             transition={{ type: "spring", stiffness: 250, damping: 25 }}
             className="absolute inset-0 flex flex-col" 
           >

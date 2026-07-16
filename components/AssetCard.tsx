@@ -17,7 +17,7 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
   }
 
   return (
-    <div className={`w-full h-[50vh] flex flex-col items-center justify-center p-6 bg-[var(--color-bg-card)] border-b border-[var(--color-border)] ${isBottom ? `border-b-4 ${borderColor} transition-colors duration-300` : ""}`}>
+    <div className={`w-full flex-1 flex flex-col items-center justify-center p-6 bg-[var(--color-bg-card)] border-b border-[var(--color-border)] ${isBottom ? `border-b-4 ${borderColor} transition-colors duration-300` : ""}`}>
       {asset ? (
         <>
           {asset.logo && (
@@ -27,7 +27,6 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
             </div>
           )}
           <h2 className="text-2xl font-bold mb-1">{asset.name}</h2>
-          <p className="text-sm text-[var(--color-text-muted)] mb-4">H2 2025 – H1 2026</p>
           
           <div className="h-16 flex items-center justify-center">
             {(!isBottom || revealed) ? (
