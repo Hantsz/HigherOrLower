@@ -45,13 +45,26 @@ export default function GameOverOverlay({ score, onPlayAgain }: { score: number,
             )}
 
             <div className="flex flex-col gap-3">
-              <button 
-                onClick={() => setShowLogin(true)}
-                className="w-full bg-[var(--color-green)] text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:bg-green-600 transition-colors flex flex-col items-center justify-center leading-tight"
-              >
-                <span>Log in to save your score</span>
-                <span className="text-sm opacity-90">and get prizes</span>
-              </button>
+              {score >= 15 && (
+                <button 
+                  onClick={() => setShowLogin(true)}
+                  className="w-full bg-white text-black font-bold text-lg py-4 rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:bg-gray-100 transition-colors flex flex-col items-center justify-center leading-tight border-2 border-[var(--color-green)]"
+                >
+                  <span className="text-[var(--color-green)]">🎉 Claim your surprise!</span>
+                  <span className="text-sm text-[var(--color-text-muted)] mt-1 font-normal">You reached 15 correct answers!</span>
+                </button>
+              )}
+              
+              {score < 15 && (
+                <button 
+                  onClick={() => setShowLogin(true)}
+                  className="w-full bg-[var(--color-green)] text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:bg-green-600 transition-colors flex flex-col items-center justify-center leading-tight"
+                >
+                  <span>Log in to save your score</span>
+                  <span className="text-sm opacity-90">and get prizes</span>
+                </button>
+              )}
+
               <button 
                 onClick={onPlayAgain}
                 className="w-full bg-white/20 text-white font-bold text-lg py-4 rounded-xl hover:bg-white/30 transition-colors"

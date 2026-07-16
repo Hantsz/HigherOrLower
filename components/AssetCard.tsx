@@ -23,20 +23,32 @@ function CountUp({ value }: { value: number }) {
 }
 
 export default function AssetCard({ asset, isBottom, revealed, isCorrect }: AssetCardProps) {
-  let borderColor = "border-transparent";
-  if (revealed && isBottom) {
-    if (isCorrect === true) borderColor = "border-[var(--color-correct)]";
-    if (isCorrect === false) borderColor = "border-[var(--color-wrong)]";
-  }
-
   return (
-    <div className={`w-full flex-1 flex flex-col items-center justify-center p-6 bg-[var(--color-bg-card)] border-b border-[var(--color-border)] ${isBottom ? `border-b-4 ${borderColor} transition-colors duration-300` : ""}`}>
+    <div className={`w-full flex-1 flex flex-col items-center justify-center p-6 bg-[var(--color-bg-card)] border-b border-[var(--color-border)]`}>
       {asset ? (
         <>
           {asset.logo && (
             <div className="w-16 h-16 rounded-full bg-white border border-[var(--color-border)] mb-4 flex items-center justify-center overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={asset.logo.startsWith("http") ? asset.logo : `/logos/${asset.logo}`} alt={asset.name} className="w-10 h-10 object-contain" />
+              <img 
+                src={asset.logo.startsWith("http") ? asset.logo : `/logos/${asset.logo}`} 
+                alt={asset.name} 
+                className="w-10 h-10 object-contain"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  // If it's a clearbit logo that failed, fallback to google favicon
+                  if (target.src.includes('logo.clearbit.com')) {
+                    const domainMatch = target.src.match(/clearbit\.com\/([^\?]+)/);
+                    if (domainMatch && domainMatch[1]) {
+                      target.src = `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://${domainMatch[1]}&size=128`;
+                    }
+                  } else if (target.src.includes('cryptologos.cc')) {
+                    // Fallback for crypto if needed, though they are usually reliable
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML = '<div class="w-10 h-10 flex items-center justify-center font-bold text-gray-400 border border-gray-200 rounded-full bg-gray-50">' + asset.name.charAt(0) + '</div>';
+                  }
+                }}
+              />
             </div>
           )}
           <h2 className="text-2xl font-bold mb-1 text-center">{asset.name}</h2>

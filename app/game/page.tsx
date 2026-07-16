@@ -4,6 +4,7 @@ import { assets, Asset } from "@/data/assets";
 import AssetCard from "@/components/AssetCard";
 import Divider from "@/components/Divider";
 import GameOverOverlay from "@/components/GameOverOverlay";
+import SebHeader from "@/components/SebHeader";
 import { motion, AnimatePresence } from "framer-motion";
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -21,6 +22,8 @@ export default function GamePage() {
   const [deck, setDeck] = useState<Asset[]>(playingDeck);
   const [round, setRound] = useState(1);
   const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const [showSurpriseBanner, setShowSurpriseBanner] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [gameOver, setGameOver] = useState(false);
@@ -38,6 +41,13 @@ export default function GamePage() {
     const update = () => setIsMobile(mq.matches);
     update();
     mq.addEventListener("change", update);
+    
+    // Load high score
+    const storedHigh = localStorage.getItem("highScore");
+    if (storedHigh) {
+      setHighScore(parseInt(storedHigh, 10));
+    }
+    
     return () => mq.removeEventListener("change", update);
   }, []);
   
@@ -71,7 +81,23 @@ export default function GamePage() {
 
     setTimeout(() => {
       if (isGuessCorrect) {
-        setScore(prev => prev + 1);
+        setScore(prev => {
+          const newScore = prev + 1;
+          
+          if (newScore === 15) {
+            setShowSurpriseBanner(true);
+            setTimeout(() => setShowSurpriseBanner(false), 4000);
+          }
+          
+          setHighScore(current => {
+            if (newScore > current) {
+              localStorage.setItem("highScore", newScore.toString());
+              return newScore;
+            }
+            return current;
+          });
+          return newScore;
+        });
         setIsRevealed(false);
         setIsCorrect(null);
         setRound(prev => {
@@ -99,7 +125,26 @@ export default function GamePage() {
   };
 
   return (
-    <main className="h-[100dvh] bg-black overflow-hidden flex flex-col font-sans">
+    <main className="h-[100dvh] bg-black overflow-hidden flex flex-col font-sans relative">
+      <SebHeader score={score} highScore={highScore} />
+      
+      <AnimatePresence>
+        {showSurpriseBanner && (
+          <motion.div 
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            className="absolute top-12 left-0 right-0 z-30 mx-4 mt-2 p-3 bg-white text-black rounded-xl shadow-lg border border-[var(--color-border)] flex items-center gap-3"
+          >
+            <div className="w-8 h-8 rounded-full bg-[var(--color-green)] flex-shrink-0 flex items-center justify-center text-white font-bold">!</div>
+            <div>
+              <p className="font-bold text-sm leading-tight text-[var(--color-text-primary)]">Achievement Unlocked!</p>
+              <p className="text-xs text-[var(--color-text-muted)] mt-0.5">You've reached 15. Claim your surprise at the end of the game.</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div

@@ -1,17 +1,29 @@
-import Image from "next/image";
+interface SebHeaderProps {
+  score?: number;
+  highScore?: number;
+}
 
-export default function SebHeader() {
+export default function SebHeader({ score, highScore }: SebHeaderProps) {
+  if (score === undefined || highScore === undefined) return null;
+
+  const progress = Math.min(100, (score / 15) * 100);
+
   return (
-    <header className="w-full bg-black h-14 flex items-center px-4">
-      <div className="w-8 h-8 relative overflow-hidden rounded-sm">
-        <Image 
-          src="/seb-logo.png" 
-          alt="SEB Logo" 
-          width={32} 
-          height={32} 
-          className="object-cover w-full h-full"
-        />
+    <header className="w-full bg-[var(--color-bg-card)] h-10 flex items-center justify-between px-6 border-b border-[var(--color-border)] relative z-20 shadow-sm">
+      <div className="flex items-center gap-2">
+        <span className="text-[var(--color-text-muted)] text-[10px] uppercase tracking-widest font-bold">Score</span>
+        <span className="text-[var(--color-text-primary)] font-bold text-base leading-none">{score}</span>
       </div>
+      <div className="flex items-center gap-2">
+        <span className="text-[var(--color-text-muted)] text-[10px] uppercase tracking-widest font-bold">High Score</span>
+        <span className="text-[var(--color-green)] font-bold text-base leading-none">{highScore}</span>
+      </div>
+      
+      {/* Progress Bar */}
+      <div 
+        className="absolute bottom-0 left-0 h-[2px] bg-[var(--color-green)] transition-all duration-500 ease-out" 
+        style={{ width: `${progress}%` }} 
+      />
     </header>
   );
 }
