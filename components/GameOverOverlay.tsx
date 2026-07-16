@@ -48,20 +48,22 @@ export default function GameOverOverlay({ score, onPlayAgain }: { score: number,
               {score >= 15 && (
                 <button 
                   onClick={() => setShowLogin(true)}
-                  className="w-full bg-white text-black font-bold text-lg py-4 rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:bg-gray-100 transition-colors flex flex-col items-center justify-center leading-tight border-2 border-[var(--color-green)]"
+                  className="w-full bg-white text-black font-bold text-lg px-4 py-4 rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:bg-gray-100 transition-colors flex flex-col items-center justify-center leading-tight border-2 border-[var(--color-green)] gap-1"
                 >
-                  <span className="text-[var(--color-green)] text-sm">🎉 Claim your 20€ SEB fund and no roboinvestor fees for the first year!</span>
-                  <span className="text-sm text-[var(--color-text-muted)] mt-1 font-normal">You reached 15 correct answers!</span>
+                  <span className="text-[var(--color-green)] mb-1">🎉 Claim your reward!</span>
+                  <span className="text-sm font-normal text-center leading-snug">20€ SEB fund + no roboinvestor fees for the first year</span>
+                  <span className="text-xs text-[var(--color-text-muted)] mt-1 font-normal italic">You reached 15 correct answers!</span>
                 </button>
               )}
               
               {score < 15 && (
                 <button 
                   onClick={() => setShowLogin(true)}
-                  className="w-full bg-[var(--color-green)] text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:bg-green-600 transition-colors flex flex-col items-center justify-center leading-tight"
+                  className="w-full bg-[var(--color-green)] text-white font-bold text-lg px-4 py-4 rounded-xl shadow-lg hover:bg-green-600 transition-colors flex flex-col items-center justify-center leading-tight gap-1"
                 >
-                  <span>Log in to save your score</span>
-                  <span className="text-sm opacity-90">and get 20€ into any SEB fund + no roboinvestor fees for the first year</span>
+                  <span className="mb-1">Log in to save your score</span>
+                  <span className="text-sm opacity-90 font-normal leading-snug">Get 20€ into any SEB fund</span>
+                  <span className="text-sm opacity-90 font-normal leading-snug">+ no roboinvestor fees for the first year</span>
                 </button>
               )}
 
