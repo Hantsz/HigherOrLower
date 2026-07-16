@@ -28,6 +28,8 @@ export default function GamePage() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [animating, setAnimating] = useState(false);
+  // First-visit rules overlay; shown after mount to avoid SSR/localStorage mismatch
+  const [showRules, setShowRules] = useState(false);
   // Desktop lays the cards out side by side, so cards push left instead of up.
   // Initialized from matchMedia on the client so the very first render already
   // uses the correct axis (SSR renders false; no styles depend on it at mount).
@@ -47,7 +49,12 @@ export default function GamePage() {
     if (storedHigh) {
       setHighScore(parseInt(storedHigh, 10));
     }
-    
+
+    // Show the rules on the first visit only
+    if (!localStorage.getItem("rulesSeen")) {
+      setShowRules(true);
+    }
+
     return () => mq.removeEventListener("change", update);
   }, []);
   
@@ -67,7 +74,7 @@ export default function GamePage() {
   const bottomCard = deck[round];
 
   const handleGuess = (guess: "higher" | "lower") => {
-    if (isRevealed || animating || gameOver) return;
+    if (isRevealed || animating || gameOver || showRules) return;
     
     setAnimating(true);
     setIsRevealed(true);
@@ -179,6 +186,37 @@ export default function GamePage() {
         </button>
       </div>
       
+      <AnimatePresence>
+        {showRules && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-40 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 24 }}
+              className="w-full max-w-sm rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md p-6 text-white text-center shadow-2xl"
+            >
+              <h2 className="text-2xl font-bold mb-4">How to play</h2>
+              <ul className="text-sm space-y-3 mb-6 text-white/85">
+                <li>You&apos;ll see an investment and how much it has returned this year.</li>
+                <li>Guess if the next one performed <span className="font-bold">▲ Higher</span> or <span className="font-bold">▼ Lower</span>.</li>
+                <li>Each correct guess grows your streak — one miss and the game is over.</li>
+              </ul>
+              <button
+                onClick={() => { localStorage.setItem("rulesSeen", "1"); setShowRules(false); }}
+                className="w-full py-3 rounded-xl font-bold text-lg text-white bg-[var(--color-correct)]"
+              >
+                Start
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {gameOver && (
         <GameOverOverlay score={score} onPlayAgain={initGame} />
       )}
