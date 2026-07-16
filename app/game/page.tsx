@@ -19,7 +19,9 @@ function shuffleArray<T>(array: T[]): T[] {
 const playingDeck = assets;
 
 export default function GamePage() {
-  const [deck, setDeck] = useState<Asset[]>(playingDeck);
+  // Start empty and render nothing until the client-side shuffle runs —
+  // otherwise the unshuffled deck flashes through before the real cards land.
+  const [deck, setDeck] = useState<Asset[]>([]);
   const [round, setRound] = useState(1);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
@@ -58,6 +60,15 @@ export default function GamePage() {
     return () => mq.removeEventListener("change", update);
   }, []);
   
+  // Preload the next card's background so it never pops in mid-round
+  useEffect(() => {
+    const next = deck[round + 1];
+    if (next?.background) {
+      const img = new window.Image();
+      img.src = `/backgrounds/${next.background}`;
+    }
+  }, [deck, round]);
+
   const initGame = useCallback(() => {
     setDeck(shuffleArray(playingDeck));
     setRound(1);

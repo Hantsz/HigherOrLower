@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { Asset } from "@/data/assets";
+import { insights } from "@/data/insights";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 interface AssetCardProps {
@@ -81,15 +82,25 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
             )}
           </div>
           
-          <div className="h-8 mt-4 flex items-center justify-center">
-             <motion.p 
-               initial={{ opacity: 0 }} 
-               animate={{ opacity: 1 }} 
-               transition={{ delay: 0.3 }}
-               className="text-sm text-[var(--color-text-muted)] text-center max-w-xs"
-             >
-               {asset.funFact}
-             </motion.p>
+          <div className="mt-3 min-h-8 flex items-center justify-center">
+             {isBottom && !revealed ? (
+               insights[asset.id] ? (
+                 <ul className="text-xs md:text-sm font-medium text-[var(--color-text-primary)]/80 text-left space-y-1 max-w-xs list-disc list-inside">
+                   {insights[asset.id].hints.map((hint) => (
+                     <li key={hint}>{hint}</li>
+                   ))}
+                 </ul>
+               ) : null
+             ) : (
+               <motion.p
+                 initial={{ opacity: 0 }}
+                 animate={{ opacity: 1 }}
+                 transition={{ delay: 0.3 }}
+                 className="text-sm font-medium text-[var(--color-text-primary)]/80 text-center max-w-xs"
+               >
+                 {insights[asset.id]?.why ?? asset.funFact}
+               </motion.p>
+             )}
           </div>
         </>
       ) : (
