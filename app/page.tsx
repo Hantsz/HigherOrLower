@@ -7,12 +7,12 @@ export default function Home() {
       <SebHeader />
       
       <div className="flex-1 flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto">
-        <h1 className="text-4xl font-bold mb-4 text-[var(--color-text-primary)]">
-          You got this. SEB&apos;s got you.
+        <h1 className="text-4xl font-bold mb-4 text-[var(--color-text-primary)] tracking-tight">
+          Your investing era starts here.
         </h1>
         
         <p className="text-lg text-[var(--color-text-muted)] mb-12">
-          Guess which asset grew more. Build your streak and unlock your first real investment with SEB.
+          Guess which asset has grown more in a year. Reach a score of 10 to get a gift! (Log in to save your score).
         </p>
         
         <Link 
