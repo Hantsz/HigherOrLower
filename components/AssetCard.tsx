@@ -1,12 +1,25 @@
 "use client";
+import { useEffect } from "react";
 import { Asset } from "@/data/assets";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 interface AssetCardProps {
   asset: Asset | null;
   isBottom: boolean;
   revealed: boolean;
   isCorrect?: boolean | null;
+}
+
+function CountUp({ value }: { value: number }) {
+  const progress = useMotionValue(0);
+  const display = useTransform(progress, (v) => `${v >= 0 ? "+" : ""}${v.toFixed(1)}%`);
+
+  useEffect(() => {
+    const controls = animate(progress, value, { duration: 0.9, ease: [0.16, 1, 0.3, 1] });
+    return () => controls.stop();
+  }, [progress, value]);
+
+  return <motion.span>{display}</motion.span>;
 }
 
 export default function AssetCard({ asset, isBottom, revealed, isCorrect }: AssetCardProps) {
@@ -27,15 +40,18 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
             </div>
           )}
           <h2 className="text-2xl font-bold mb-1">{asset.name}</h2>
-          
           <div className="h-16 flex items-center justify-center">
             {(!isBottom || revealed) ? (
-              <motion.div 
-                initial={isBottom ? { opacity: 0, y: 10 } : false} 
+              <motion.div
+                initial={isBottom ? { opacity: 0, y: 10 } : false}
                 animate={{ opacity: 1, y: 0 }}
                 className={`text-5xl font-bold ${asset.return >= 0 ? "text-[var(--color-correct)]" : "text-[var(--color-wrong)]"}`}
               >
-                {asset.return >= 0 ? "+" : ""}{asset.return}%
+                {isBottom ? (
+                  <CountUp value={asset.return} />
+                ) : (
+                  <>{asset.return >= 0 ? "+" : ""}{asset.return.toFixed(1)}%</>
+                )}
               </motion.div>
             ) : (
               <div className="text-6xl font-bold text-[#CECECE]">?</div>

@@ -15,20 +15,7 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArr;
 }
 
-const playingDeck = assets.length > 1 ? assets : [
-  { id: "1", name: "S&P 500", logo: "", return: 15.5, funFact: "Solid growth tracking US top 500." },
-  { id: "2", name: "Bitcoin", logo: "", return: -4.2, funFact: "Crypto winter effects." },
-  { id: "3", name: "Gold", logo: "", return: 8.1, funFact: "A traditional safe haven." },
-  { id: "4", name: "Tesla", logo: "", return: -12.4, funFact: "EV market faces headwinds." },
-  { id: "5", name: "Apple", logo: "", return: 5.5, funFact: "Steady growth and services." },
-  { id: "6", name: "Oil", logo: "", return: 12.0, funFact: "Energy demand surged." },
-  { id: "7", name: "Bonds", logo: "", return: 2.1, funFact: "Low risk, low reward." },
-  { id: "8", name: "Ethereum", logo: "", return: 22.4, funFact: "DeFi and NFTs driving value." },
-  { id: "9", name: "Real Estate", logo: "", return: 4.5, funFact: "Housing market stable." },
-  { id: "10", name: "Amazon", logo: "", return: 18.2, funFact: "E-commerce dominance continues." },
-  { id: "11", name: "Netflix", logo: "", return: 14.1, funFact: "Subscriber growth rebounds." },
-  { id: "12", name: "Google", logo: "", return: 9.9, funFact: "AI integration boosts search." },
-];
+const playingDeck = assets;
 
 export default function GamePage() {
   const [deck, setDeck] = useState<Asset[]>(playingDeck);
@@ -78,9 +65,17 @@ export default function GamePage() {
         setIsCorrect(null);
         setRound(prev => {
           const nextRound = prev + 1;
-          // Dynamically extend deck if approaching the end
+          // The deck holds every asset exactly once, so nothing repeats within
+          // a game. Only if the player clears all of them do we reshuffle and
+          // extend — making sure the seam never shows the same asset twice in a row.
           if (nextRound >= deck.length - 1) {
-            setDeck(currentDeck => [...currentDeck, ...shuffleArray(playingDeck)]);
+            setDeck(currentDeck => {
+              const next = shuffleArray(playingDeck);
+              if (next[0].id === currentDeck[currentDeck.length - 1].id) {
+                next.push(next.shift()!);
+              }
+              return [...currentDeck, ...next];
+            });
           }
           return nextRound;
         });
