@@ -12,7 +12,7 @@ export default function Home() {
         </h1>
         
         <p className="text-lg text-[var(--color-text-muted)] mb-12">
-          Guess which asset has grown more in a year. Reach a score of 10 to get a gift! (Log in to save your score).
+          Guess which asset has grown more in a year. Reach a score of 15 to get 20€ into any SEB fund and no roboinvestor fees for the first year! (Log in to save your score).
         </p>
         
         <Link 

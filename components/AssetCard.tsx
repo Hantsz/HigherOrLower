@@ -54,8 +54,8 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
             </div>
           )}
           <h2 className="text-2xl font-bold mb-1 text-center">{asset.name}</h2>
-          <div className="h-16 flex items-center justify-center">
-            {(!isBottom || revealed) ? (
+          {(!isBottom || revealed) && (
+            <div className="flex items-center justify-center mt-2">
               <motion.div
                 initial={isBottom ? { opacity: 0, y: 10 } : false}
                 animate={{ opacity: 1, y: 0 }}
@@ -67,10 +67,8 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
                   <>{asset.return >= 0 ? "+" : ""}{asset.return.toFixed(1)}%</>
                 )}
               </motion.div>
-            ) : (
-              <div className="text-6xl font-bold text-[#CECECE]">?</div>
-            )}
-          </div>
+            </div>
+          )}
           
           <div className="mt-3 min-h-8 flex flex-col items-center justify-center gap-2">
              {/* general company info is always visible */}

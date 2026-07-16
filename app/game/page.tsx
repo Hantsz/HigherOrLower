@@ -141,7 +141,7 @@ export default function GamePage() {
             <div className="w-8 h-8 rounded-full bg-[var(--color-green)] flex-shrink-0 flex items-center justify-center text-white font-bold">!</div>
             <div>
               <p className="font-bold text-sm leading-tight text-[var(--color-text-primary)]">Achievement Unlocked!</p>
-              <p className="text-xs text-[var(--color-text-muted)] mt-0.5">You've reached 15. Claim your surprise at the end of the game.</p>
+              <p className="text-xs text-[var(--color-text-muted)] mt-0.5">You've reached 15. Claim your 20€ SEB fund and no roboinvestor fees for the first year at the end of the game.</p>
             </div>
           </motion.div>
         )}
