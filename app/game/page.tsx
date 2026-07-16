@@ -93,8 +93,8 @@ export default function GamePage() {
   };
 
   return (
-    <main className="min-h-screen bg-black overflow-hidden relative font-sans">
-      <div className="absolute inset-0 pb-[72px] overflow-hidden">
+    <main className="h-screen bg-black overflow-hidden flex flex-col font-sans">
+      <div className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div 
             key={round}
@@ -109,11 +109,11 @@ export default function GamePage() {
           </motion.div>
         </AnimatePresence>
         
-        {/* Divider stays fixed in the center of the screen during push transitions */}
+        {/* Divider stays fixed in the center of the playable area during push transitions */}
         <Divider isCorrect={isCorrect} isRevealed={isRevealed} />
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 flex bg-black border-t border-[var(--color-border)] z-20">
+      <div className="flex-none flex bg-black border-t border-[var(--color-border)] z-20 relative">
         <button 
           onClick={() => handleGuess("higher")}
           className="flex-1 py-6 font-bold text-xl text-white bg-[var(--color-green)] flex items-center justify-center gap-2"
