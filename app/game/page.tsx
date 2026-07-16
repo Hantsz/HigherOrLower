@@ -1,10 +1,8 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { assets, Asset } from "@/data/assets";
 import AssetCard from "@/components/AssetCard";
 import Divider from "@/components/Divider";
-import ProgressBar from "@/components/ProgressBar";
-import RevealToast from "@/components/RevealToast";
 import GameOverOverlay from "@/components/GameOverOverlay";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -33,13 +31,17 @@ const playingDeck = assets.length > 1 ? assets : [
 ];
 
 export default function GamePage() {
-  const [deck, setDeck] = useState<Asset[]>(() => shuffleArray(playingDeck));
+  const [deck, setDeck] = useState<Asset[]>(playingDeck);
   const [round, setRound] = useState(1);
   const [score, setScore] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    setDeck(shuffleArray(playingDeck));
+  }, []);
   
   const initGame = useCallback(() => {
     setDeck(shuffleArray(playingDeck));
@@ -92,23 +94,23 @@ export default function GamePage() {
 
   return (
     <main className="min-h-screen bg-black overflow-hidden relative font-sans">
-      <ProgressBar score={score} />
-      
-      <div className="absolute inset-0 pt-8 pb-[72px] overflow-hidden">
+      <div className="absolute inset-0 pb-[72px] overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div 
             key={round}
-            initial={{ y: 50, opacity: 0 }}
+            initial={{ y: "50vh", opacity: 1 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -50, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 flex flex-col pt-1" 
+            exit={{ y: "-50vh", opacity: 1 }}
+            transition={{ type: "spring", stiffness: 250, damping: 25 }}
+            className="absolute inset-0 flex flex-col" 
           >
             <AssetCard asset={topCard} isBottom={false} revealed={true} />
-            <Divider />
             <AssetCard asset={bottomCard} isBottom={true} revealed={isRevealed} isCorrect={isCorrect} />
           </motion.div>
         </AnimatePresence>
+        
+        {/* Divider stays fixed in the center of the screen during push transitions */}
+        <Divider isCorrect={isCorrect} isRevealed={isRevealed} />
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 flex bg-black border-t border-[var(--color-border)] z-20">
@@ -125,8 +127,6 @@ export default function GamePage() {
           ▼ Lower
         </button>
       </div>
-
-      <RevealToast show={isCorrect === true && !gameOver && isRevealed} />
       
       {gameOver && (
         <GameOverOverlay score={score} onPlayAgain={initGame} />
