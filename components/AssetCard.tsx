@@ -24,7 +24,7 @@ function CountUp({ value }: { value: number }) {
 
 export default function AssetCard({ asset, isBottom, revealed, isCorrect }: AssetCardProps) {
   return (
-    <div className={`w-full flex-1 flex flex-col items-center justify-center p-6 bg-[var(--color-bg-card)] border-b border-[var(--color-border)]`}>
+    <div className={`w-full flex-1 flex flex-col items-center justify-center p-4 md:p-6 bg-[var(--color-bg-card)]`}>
       {asset ? (
         <>
           {asset.logo && (

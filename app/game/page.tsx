@@ -167,13 +167,13 @@ export default function GamePage() {
       <div className="flex-none flex bg-black border-t border-[var(--color-border)] z-20 relative">
         <button 
           onClick={() => handleGuess("higher")}
-          className="flex-1 py-6 font-bold text-xl text-white bg-[var(--color-green)] flex items-center justify-center gap-2"
+          className="flex-1 py-4 md:py-6 font-bold text-xl text-white bg-[var(--color-green)] flex items-center justify-center gap-2"
         >
           ▲ Higher
         </button>
         <button 
           onClick={() => handleGuess("lower")}
-          className="flex-1 py-6 font-bold text-xl text-white bg-[#222222] flex items-center justify-center gap-2"
+          className="flex-1 py-4 md:py-6 font-bold text-xl text-white bg-[#222222] flex items-center justify-center gap-2"
         >
           ▼ Lower
         </button>
