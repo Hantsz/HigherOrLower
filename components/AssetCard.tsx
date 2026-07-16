@@ -30,7 +30,7 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
   }
 
   return (
-    <div className={`w-full flex-1 flex flex-col items-center justify-center p-4 md:p-6 bg-[var(--color-bg-card)] border-b border-[var(--color-border)] ${isBottom ? `border-b-4 ${borderColor} transition-colors duration-300` : ""}`}>
+    <div className={`w-full flex-1 flex flex-col items-center justify-center p-6 bg-[var(--color-bg-card)] border-b border-[var(--color-border)] ${isBottom ? `border-b-4 ${borderColor} transition-colors duration-300` : ""}`}>
       {asset ? (
         <>
           {asset.logo && (
@@ -39,13 +39,13 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
               <img src={`/logos/${asset.logo}`} alt={asset.name} className="w-10 h-10 object-contain" />
             </div>
           )}
-          <h2 className="text-lg md:text-2xl font-bold mb-1 text-center">{asset.name}</h2>
+          <h2 className="text-2xl font-bold mb-1 text-center">{asset.name}</h2>
           <div className="h-16 flex items-center justify-center">
             {(!isBottom || revealed) ? (
               <motion.div
                 initial={isBottom ? { opacity: 0, y: 10 } : false}
                 animate={{ opacity: 1, y: 0 }}
-                className={`text-3xl md:text-5xl font-bold ${asset.return >= 0 ? "text-[var(--color-correct)]" : "text-[var(--color-wrong)]"}`}
+                className={`text-5xl font-bold ${asset.return >= 0 ? "text-[var(--color-correct)]" : "text-[var(--color-wrong)]"}`}
               >
                 {isBottom ? (
                   <CountUp value={asset.return} />
@@ -54,7 +54,7 @@ export default function AssetCard({ asset, isBottom, revealed, isCorrect }: Asse
                 )}
               </motion.div>
             ) : (
-              <div className="text-4xl md:text-6xl font-bold text-[#CECECE]">?</div>
+              <div className="text-6xl font-bold text-[#CECECE]">?</div>
             )}
           </div>
           

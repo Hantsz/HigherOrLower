@@ -11,8 +11,8 @@ export default function Divider({ isCorrect = null, isRevealed = false }: Divide
   const showResult = isRevealed && isCorrect !== null;
 
   return (
-    <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 md:inset-y-auto md:left-0 md:right-0 md:top-1/2 md:translate-x-0 md:-translate-y-1/2 flex items-center justify-center z-20 pointer-events-none">
-      <div className="h-full w-[1px] md:w-full md:h-[1px] bg-[var(--color-border)] absolute" />
+    <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 md:inset-y-0 md:left-1/2 md:right-auto md:top-0 md:-translate-x-1/2 md:translate-y-0 flex items-center justify-center z-20 pointer-events-none">
+      <div className="w-full h-[1px] md:h-full md:w-[1px] bg-[var(--color-border)] absolute" />
 
       <AnimatePresence mode="wait">
         {showResult ? (

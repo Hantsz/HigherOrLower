@@ -25,7 +25,7 @@ export default function GamePage() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [animating, setAnimating] = useState(false);
-  // Phones lay the cards out horizontally, so cards push left instead of up
+  // Desktop lays the cards out side by side, so cards push left instead of up
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -100,11 +100,11 @@ export default function GamePage() {
         <AnimatePresence mode="popLayout">
           <motion.div
             key={round}
-            initial={isMobile ? { x: "50%", opacity: 1 } : { y: "50%", opacity: 1 }}
-            animate={isMobile ? { x: 0, opacity: 1 } : { y: 0, opacity: 1 }}
-            exit={isMobile ? { x: "-50%", opacity: 1 } : { y: "-50%", opacity: 1 }}
+            initial={isMobile ? { y: "50%", opacity: 1 } : { x: "50%", opacity: 1 }}
+            animate={isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
+            exit={isMobile ? { y: "-50%", opacity: 1 } : { x: "-50%", opacity: 1 }}
             transition={{ type: "spring", stiffness: 250, damping: 25 }}
-            className="absolute inset-0 flex flex-row md:flex-col"
+            className="absolute inset-0 flex flex-col md:flex-row"
           >
             <AssetCard asset={topCard} isBottom={false} revealed={true} />
             <AssetCard asset={bottomCard} isBottom={true} revealed={isRevealed} isCorrect={isCorrect} />
