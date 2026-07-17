@@ -1,5 +1,6 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { assets, Asset } from "@/data/assets";
 import AssetCard from "@/components/AssetCard";
 import Divider from "@/components/Divider";
@@ -19,6 +20,9 @@ function shuffleArray<T>(array: T[]): T[] {
 const playingDeck = assets;
 
 export default function GamePage() {
+  const router = useRouter();
+  const [hasSeenIntro, setHasSeenIntro] = useState<boolean | null>(null);
+
   // Start empty and render nothing until the client-side shuffle runs —
   // otherwise the unshuffled deck flashes through before the real cards land.
   const [deck, setDeck] = useState<Asset[]>([]);
@@ -38,6 +42,13 @@ export default function GamePage() {
   );
 
   useEffect(() => {
+    const seen = localStorage.getItem("hasSeenIntro");
+    if (!seen) {
+      router.replace("/");
+      return;
+    }
+    setHasSeenIntro(true);
+
     setDeck(shuffleArray(playingDeck));
     const mq = window.matchMedia("(max-width: 767px)");
     const update = () => setIsMobile(mq.matches);
@@ -51,7 +62,7 @@ export default function GamePage() {
     }
 
     return () => mq.removeEventListener("change", update);
-  }, []);
+  }, [router]);
 
   const initGame = useCallback(() => {
     setDeck(shuffleArray(playingDeck));
@@ -63,7 +74,7 @@ export default function GamePage() {
     setAnimating(false);
   }, []);
 
-  if (deck.length < 2) return null;
+  if (!hasSeenIntro || deck.length < 2) return null;
 
   const topCard = deck[round - 1];
   const bottomCard = deck[round];

@@ -1,7 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import SebHeader from "@/components/SebHeader";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    localStorage.setItem("hasSeenIntro", "true");
+  }, []);
+
   return (
     <main className="min-h-[100dvh] flex flex-col bg-white">
       <SebHeader />
